@@ -9,9 +9,9 @@ app.use(middleware.CORS);
 app.use(express.json());
 
 app.use('/user', controllers.usercontroller);
-app.use(middleware.validateJWT);
 app.use('/listing', controllers.listingcontroller);
 app.use('/order', controllers.ordercontroller);
+app.use(middleware.validateJWT);
 
 dbConnection.authenticate()
   .then(() => dbConnection.sync(/*{force: true}*/))

@@ -132,9 +132,7 @@ router.get('/all', async (req,res) => {
       }
     });
 
-    res.status(200).json({
-      users: users
-    });
+    res.status(200).json(users);
   } 
   catch (error) {
     res.status(500).json({
@@ -155,9 +153,7 @@ router.get('/:id', async (req, res) => {
       }
     });
 
-    res.status(200).json({
-      user: user
-    });
+    res.status(200).json(user);
   } 
   catch (error) {
     res.status(500).json({

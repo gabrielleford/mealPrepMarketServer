@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Listing } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
 
+// ** CREATE LISTING ** //
 router.post('/create', validateJWT, async(req, res) => {
   const { title, description, image, price, tag } = req.body.listing;
 
@@ -11,10 +12,10 @@ router.post('/create', validateJWT, async(req, res) => {
       message: 'Title must be at least 3 characters'
     });
 
-  if (description.length < 20) return res.status(400).json({ message: 'Description must be at least 20 characters'})
-  else if (description.length > 2000) return res.status(400).json({
-    message: `Description is ${description.length - 2000} characters over the limit`
-  })
+  // if (description.length < 20) return res.status(400).json({ message: 'Description must be at least 20 characters'})
+  // else if (description.length > 2000) return res.status(400).json({
+  //   message: `Description is ${description.length - 2000} characters over the limit`
+  // })
 
   if (!image) 
     return res.status(400).json({
@@ -58,5 +59,18 @@ router.post('/create', validateJWT, async(req, res) => {
   }
   
 });
+
+// ** GET ALL LISTINGS ** //
+router.get('/', async (req, res) => {
+  try {
+    const listings = await Listing.findAll();
+    res.status(200).json(listings);
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to get listings: ${error}`
+    });
+  }
+})
 
 module.exports = router;
