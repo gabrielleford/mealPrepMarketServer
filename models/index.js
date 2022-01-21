@@ -12,6 +12,7 @@ User.hasMany(Order, {
 });
 
 Listing.belongsTo(User);
+Listing.hasMany(Order);
 
 Order.belongsTo(User);
 Order.belongsTo(Listing);
