@@ -11,6 +11,7 @@ app.use(express.json());
 app.use('/user', controllers.usercontroller);
 app.use(middleware.validateJWT);
 app.use('/listing', controllers.listingcontroller);
+app.use('/order', controllers.ordercontroller);
 
 dbConnection.authenticate()
   .then(() => dbConnection.sync(/*{force: true}*/))
