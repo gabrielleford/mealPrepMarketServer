@@ -32,4 +32,8 @@ dbConnection.authenticate()
   Michael Scott
   eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFkYzNjODkwLWUyNzItNGU4Yi1hYWFmLTI4NTE5MGZiYTQ4YiIsImlhdCI6MTY0Mjc4OTY2OSwiZXhwIjoxNjQyODc2MDY5fQ.-0_2enVZQRenOWBghmwBMKAS3QpBAuO0cEOAc428BQc
   Password123!
+
+  Jim Halpert
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhYTlmYmEwLTJjZDItNGQwMS1iZDcwLTYzZDg4NTBlZGM4OCIsImlhdCI6MTY0MjgwMjg2NiwiZXhwIjoxNjQyODg5MjY2fQ.bm6yMoVFtjRnjmkH0UkjpWjsM-yB23-8I9uxoLOdqng
+  Password123!
   */

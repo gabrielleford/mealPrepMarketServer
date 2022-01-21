@@ -199,4 +199,27 @@ router.put('/edit', validateJWT, async (req, res) => {
   }
 })
 
+// ** DELETE USER ** //
+router.delete('/delete', validateJWT, async (req, res) => {
+  const id = req.userID;
+
+  try {
+    const query = {
+      where: {
+        id: id
+      }
+    }
+
+    await User.destroy(query);
+    res.status(200).json({
+      message: "User deleted"
+    });
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to delete account`
+    });
+  }
+})
+
 module.exports = router;
