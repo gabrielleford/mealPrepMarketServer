@@ -13,5 +13,10 @@ Technology Used:
 ## Tasks
     Completed   Task
     ---         ---
-    01.20       Setup server files (app.js, db.js, middleware), created user, listing, and order models, /register endpoint 
-    01.21       database associations, fixed datatype errors
+    01.20       Setup server files (app.js, db.js, middleware), created user, listing, and order models
+    01.20       User endpoints -> /register endpoint
+    
+    01.21       database associations, fixed datatype errors  
+    01.21       Listing endpoints -> /create
+    01.21       Order endpoints -> /:listingid  
+    01.21       User endpoints -> /login, /all users, /:id user, /edit user, /delete user  
