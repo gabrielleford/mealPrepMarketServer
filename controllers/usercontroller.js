@@ -166,4 +166,51 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+// ** EDIT USER INFO ** //
+router.put('/:id', validateJWT, async (req, res) => {
+  const { firstName, lastName, email, profilePicture } = req.body.user;
+  id = req.params.id;
+  userId = req.user.id;
+
+  const updatedProfile = {
+    firstName,
+    lastName,
+    email,
+    profilePicture
+  }
+
+  const user = await User.findOne({
+    where: {
+      id: userId
+    }
+  });
+
+  if (JSON.parse(JSON.stringify(user))[0].id === userId) {
+    const query = {
+      where: {
+        id: userId
+      }
+    }
+
+    try {
+      const updated = await User.update(updatedProfile, query);
+
+      res.status(200).json({
+        message: 'profile updated',
+        updatedProfile: updatedProfile 
+      });
+    } 
+    catch (error) {
+      res.status(403).json({
+        message: `Failed to update: ${error}`
+      });
+    }
+  } else {
+    res.status(500).json({
+      message: "You can only update your own profile"
+    })
+  }
+
+})
+
 module.exports = router;
