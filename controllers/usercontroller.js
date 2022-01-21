@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validateJWT = require('../middleware/validateJWT');
 
-// ** Register user ** //
+// ** REGISTER USER ** //
 router.post('/register', async (req, res) => {
   let {role, firstName, lastName, email, password} = req.body.user;
 
@@ -76,6 +76,7 @@ router.post('/register', async (req, res) => {
   }
 })
 
+// ** LOGIN USER ** //
 router.post('/login', async (req, res) => {
   const { email, password } = req.body.user;
 
@@ -119,6 +120,26 @@ router.post('/login', async (req, res) => {
     res.status(500).json({
       message: `Failed to log user in: ${error}`
     })
+  }
+})
+
+// ** GET PRIMARY USERS ** //
+router.get('/all', async (req,res) => {
+  try {
+    const users = await User.findAll({
+      where: {
+        role: 'primary'
+      }
+    });
+
+    res.status(200).json({
+      users: users
+    });
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to fetch users: ${error}`
+    });
   }
 })
 
