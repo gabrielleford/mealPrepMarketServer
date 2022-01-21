@@ -124,7 +124,7 @@ router.post('/login', async (req, res) => {
 })
 
 // ** GET PRIMARY USERS ** //
-router.get('/all', async (req,res) => {
+router.get('/', async (req,res) => {
   try {
     const users = await User.findAll({
       where: {
