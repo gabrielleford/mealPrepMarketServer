@@ -21,7 +21,7 @@ const Listing = db.define('listing', {
     allowNull: false,
   },
   price: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.DECIMAL(5, 2),
     allowNull: false,
   },
   tag: {

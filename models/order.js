@@ -9,7 +9,7 @@ const Order = db.define('order', {
     allowNull: false,
   },
   quantity: {
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   fulfillmentMethod: {
