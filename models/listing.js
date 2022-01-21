@@ -25,7 +25,7 @@ const Listing = db.define('listing', {
     allowNull: false,
   },
   tag: {
-    type: DataTypes.ARRAY,
+    type: DataTypes.STRING,
     allowNull: false,
   }
 })

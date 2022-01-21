@@ -2,13 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const dbConnection = require('./db');
+const controllers = require('./controllers')
 const middleware = require('./middleware');
 
 app.use(middleware.CORS);
 app.use(express.json());
 
-
-
+app.use('/user', controllers.usercontroller);
 
 dbConnection.authenticate()
   .then(() => dbConnection.sync())
