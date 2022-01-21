@@ -17,4 +17,9 @@ Listing.hasMany(Order);
 Order.belongsTo(User);
 Order.belongsTo(Listing);
 
-module.exports = { User, Listing, Order };
+module.exports = { 
+  dbConnection: db,
+  User, 
+  Listing, 
+  Order 
+};

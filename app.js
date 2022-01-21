@@ -9,6 +9,7 @@ app.use(middleware.CORS);
 app.use(express.json());
 
 app.use('/user', controllers.usercontroller);
+app.use(middleware.validateJWT);
 app.use('/listing', controllers.listingcontroller);
 
 dbConnection.authenticate()
