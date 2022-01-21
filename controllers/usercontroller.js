@@ -143,4 +143,27 @@ router.get('/all', async (req,res) => {
   }
 })
 
+// ** GET PRIMARY USER BY ID ** //
+router.get('/:id', async (req, res) => {
+  id = req.params.id;
+
+  try {
+    const user = await User.findOne({
+      where: {
+        id: id,
+        role: 'primary'
+      }
+    });
+
+    res.status(200).json({
+      user: user
+    });
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to get user: ${error}`
+    });
+  }
+})
+
 module.exports = router;
