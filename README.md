@@ -14,4 +14,4 @@ Technology Used:
     Completed   Task
     ---         ---
     01.20       Setup server files (app.js, db.js, middleware), created user, listing, and order models, /register endpoint 
-    
+    01.21       database associations, fixed datatype errors
