@@ -73,4 +73,24 @@ router.get('/', async (req, res) => {
   }
 })
 
+// ** GET LISTING BY ID ** //
+router.get('/:id', async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const listing = await Listing.findOne({
+      where: {
+        id: id
+      }
+    })
+
+    res.status(200).json(listing);
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to fetch post: ${error}`
+    })
+  }
+})
+
 module.exports = router;
