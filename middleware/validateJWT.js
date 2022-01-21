@@ -24,6 +24,7 @@ const validateJWT = async (req, res, next) => {
 
       if (foundUser) {
         req.user = foundUser;
+        req.userID = foundUser.dataValues.id;
         next();
       } else {
         res.status(400).send({

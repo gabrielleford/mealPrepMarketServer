@@ -145,7 +145,7 @@ router.get('/all', async (req,res) => {
 
 // ** GET PRIMARY USER BY ID ** //
 router.get('/:id', async (req, res) => {
-  id = req.params.id;
+  const id = req.params.id;
 
   try {
     const user = await User.findOne({
@@ -167,10 +167,9 @@ router.get('/:id', async (req, res) => {
 })
 
 // ** EDIT USER INFO ** //
-router.put('/:id', validateJWT, async (req, res) => {
+router.put('/edit', validateJWT, async (req, res) => {
   const { firstName, lastName, email, profilePicture } = req.body.user;
-  id = req.params.id;
-  userId = req.user.id;
+  const id = req.userID;
 
   const updatedProfile = {
     firstName,
@@ -179,38 +178,25 @@ router.put('/:id', validateJWT, async (req, res) => {
     profilePicture
   }
 
-  const user = await User.findOne({
+  const query = {
     where: {
-      id: userId
+      id: id
     }
-  });
-
-  if (JSON.parse(JSON.stringify(user))[0].id === userId) {
-    const query = {
-      where: {
-        id: userId
-      }
-    }
-
-    try {
-      const updated = await User.update(updatedProfile, query);
-
-      res.status(200).json({
-        message: 'profile updated',
-        updatedProfile: updatedProfile 
-      });
-    } 
-    catch (error) {
-      res.status(403).json({
-        message: `Failed to update: ${error}`
-      });
-    }
-  } else {
-    res.status(500).json({
-      message: "You can only update your own profile"
-    })
   }
 
+  try {
+    await User.update(updatedProfile, query);
+
+    res.status(200).json({
+      message: 'profile updated',
+      updatedProfile: updatedProfile 
+    });
+  } 
+  catch (error) {
+    res.status(403).json({
+      message: `Failed to update: ${error}`
+    });
+  }
 })
 
 module.exports = router;
