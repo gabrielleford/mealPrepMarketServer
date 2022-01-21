@@ -14,21 +14,33 @@ router.post('/register', async (req, res) => {
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
   const passRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
 
-  if (!email.match(emailRegex)) return res.status(400).json({message: 'Email not valid'});
+  if (!email.match(emailRegex)) 
+    return res.status(400).json({
+      message: 'Email not valid'
+    });
 
-  if (!password.match(passRegex)) return res.status(400).json({message: 'Password not valid'});
+  if (!password.match(passRegex)) 
+    return res.status(400).json({
+      message: 'Password not valid'
+    });
 
-  if (firstName.length < 3) {
-    return res.status(400).json({message: 'First name must be at least 3 characters long'});
-  } else if (firstName.length > 50) {
-    return res.status(400).json({message: 'First name must be less than 50 characters'});
-  }
+  if (firstName.length < 3) 
+    return res.status(400).json({
+      message: 'First name must be at least 3 characters long'
+    });
+  else if (firstName.length > 50)
+    return res.status(400).json({
+      message: 'First name must be less than 50 characters'
+    });
 
-  if (lastName.length < 3) {
-    return res.status(400).json({message: 'Last name must be at least 3 characters long'});
-  } else if (lastName.length > 50) {
-    return res.status(400).json({message: 'Last name must be less than 50 characters'});
-  }
+  if (lastName.length < 3) 
+    return res.status(400).json({
+      message: 'Last name must be at least 3 characters long'
+    }); 
+  else if (lastName.length > 50) 
+    return res.status(400).json({
+      message: 'Last name must be less than 50 characters'
+    });
 
   // Create new user
   try {
@@ -58,7 +70,7 @@ router.post('/register', async (req, res) => {
       });
     } else {
       res.status(500).json({
-        message: 'Failed to register user'
+        message: `Failed to register user: ${error} `
       })
     }
   }

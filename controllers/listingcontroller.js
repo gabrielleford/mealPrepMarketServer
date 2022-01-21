@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { response } = require('express');
 const { Listing } = require('../models');
 
 router.post('/create', async(req, res) => {
@@ -23,14 +22,29 @@ router.post('/create', async(req, res) => {
 
   if(tag.length < 1) return res.status(400).json({
     message: 'Select at least one tag for your listing'
-  })
+  });
 
   // Create new listing
   try {
+    const listing = await Listing.create({
+      title,
+      description,
+      image,
+      price,
+      tag
+    });
 
+    res.status(201).json({
+      message: 'Listing created successfully',
+      listing: listing
+    });
   }
-  catch {
-
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to create listing: ${error}`
+    });
   }
   
-})
+});
+
+module.exports = router;
