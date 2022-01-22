@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { Listing } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
+const { ROLES, authRole } = require('../middleware/permissions');
 
 // ** CREATE LISTING ** //
-router.post('/create', validateJWT, async(req, res) => {
+router.post('/create', validateJWT, authRole(ROLES.primary), async(req, res) => {
   const { title, description, image, price, tag } = req.body.listing;
 
   // Backend form validation
@@ -114,7 +115,7 @@ router.get('/tag/:tag', async (req, res) => {
 })
 
 // ** UPDATE LISTING ** //
-router.put('/:id', validateJWT, async (req, res) => {
+router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const { title, description, image, price, tag } = req.body.listing;
   const id = req.params.id;
   const userID = req.id;
@@ -133,7 +134,7 @@ router.put('/:id', validateJWT, async (req, res) => {
     }
   });
 
-  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID) {
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin') {
     const query = {
       where: {
         id: id,
@@ -162,7 +163,7 @@ router.put('/:id', validateJWT, async (req, res) => {
 })
 
 // ** DELETE LISTING ** //
-router.delete('/:id', validateJWT, async (req, res) => {
+router.delete('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 
@@ -172,7 +173,7 @@ router.delete('/:id', validateJWT, async (req, res) => {
     }
   })
 
-  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID) {
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin') {
     const query = {
       where: {
         id: id

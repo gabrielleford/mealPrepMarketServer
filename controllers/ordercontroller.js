@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Order, Listing, User } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
+const { authRole, ROLES } = require('../middleware/permissions');
 
 router.post('/:listingid', validateJWT, async (req, res) => {
   const { quantity, fulfillmentMethod } = req.body.order;
@@ -53,23 +54,30 @@ router.get('/myOrders', validateJWT, async (req, res) => {
 })
 
 // ** GET PRIMARY ORDERS TO BE FULFILLED ** //
-router.get('/fulfillment', validateJWT, async (req, res) => {
-  const id = req.id;
+router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
+  const id = req.params.id;
+  const userID = req.id;
 
   try {
-    const orders = await Listing.findAll({
-      where: {
-        userId: id
-      },
-      include: [{
-        model: Order,
+    if (userID === id || req.user.role === 'admin') {
+      const orders = await Listing.findAll({
+        where: {
+          userId: id
+        },
         include: [{
-          model: User
+          model: Order,
+          include: [{
+            model: User
+          }]
         }]
-      }]
-    })
-
-    res.status(200).json(orders);
+      })
+  
+      res.status(200).json(orders);
+    } else {
+      res.status(403).json({
+        message: 'Forbidden'
+      })
+    }
   } 
   catch (error) {
     res.status(500).json({
@@ -79,23 +87,30 @@ router.get('/fulfillment', validateJWT, async (req, res) => {
 })
 
 // ** DELETE ORDER ** //
-router.delete('/:id', validateJWT, async (req, res) => {
+router.delete('/:id', validateJWT, authRole(ROLES.secondary), async (req, res) => {
   const id = req.params.id;
-  const userId = req.id;
+  const userID = req.id;
 
   try {
-    const query = {
-      where: {
-        id: id,
-        userId: userId
+    if (userID === id || req.user.role === 'admin') {
+      const query = {
+        where: {
+          id: id,
+          userId: userId
+        }
       }
+  
+      await Order.destroy(query);
+  
+      res.status(200).json({
+        message: 'Order canceled'
+      })
+    } else {
+      res.status(403).json({
+        message: 'Forbidden'
+      })
     }
 
-    await Order.destroy(query);
-
-    res.status(200).json({
-      message: 'Order canceled'
-    })
   }
   catch (error) {
     res.status(500).json({

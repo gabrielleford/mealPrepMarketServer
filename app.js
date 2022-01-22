@@ -11,7 +11,7 @@ app.use(express.json());
 app.use('/user', controllers.usercontroller);
 app.use('/listing', controllers.listingcontroller);
 app.use('/order', controllers.ordercontroller);
-app.use(middleware.validateJWT);
+
 
 dbConnection.authenticate()
   .then(() => dbConnection.sync(/*{force: true}*/))
@@ -26,7 +26,7 @@ dbConnection.authenticate()
 
 
   /* Super Mario 
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwOGU0YWU2LTRhYTYtNGU1ZS1iOTg5LTJiYzRiODJmZjZhZSIsImlhdCI6MTY0Mjc4OTA1OCwiZXhwIjoxNjQyODc1NDU4fQ.kzQ4eR2fswW6eefGqwRBqqgok5hKplrZNJoaWnLMGRk
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwOGU0YWU2LTRhYTYtNGU1ZS1iOTg5LTJiYzRiODJmZjZhZSIsImlhdCI6MTY0Mjg2ODA4MywiZXhwIjoxNjQyOTU0NDgzfQ.YmNE8RHzQvPKzgCysVMtmUUbskj_WY0uM1bSv1CFH8o
   Mario12!
 
   Michael Scott
@@ -34,6 +34,6 @@ dbConnection.authenticate()
   Password123!
 
   Jim Halpert
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhYTlmYmEwLTJjZDItNGQwMS1iZDcwLTYzZDg4NTBlZGM4OCIsImlhdCI6MTY0MjgwMjg2NiwiZXhwIjoxNjQyODg5MjY2fQ.bm6yMoVFtjRnjmkH0UkjpWjsM-yB23-8I9uxoLOdqng
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRkNzRmMGE3LTg0OGQtNGQ4Mi1iOWM0LWI1MTM5NWEyMTQ4YiIsImlhdCI6MTY0Mjg2OTkzMywiZXhwIjoxNjQyOTU2MzMzfQ.ZT03dt94Hvyh3n0zxRwh5ppBaUXXM863HjUJUenXppI
   Password123!
   */

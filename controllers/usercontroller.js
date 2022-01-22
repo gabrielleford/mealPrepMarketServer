@@ -163,15 +163,17 @@ router.get('/:id', async (req, res) => {
 })
 
 // ** EDIT USER INFO ** //
-router.put('/edit', validateJWT, async (req, res) => {
-  const { firstName, lastName, email, profilePicture } = req.body.user;
-  const id = req.userID;
+router.put('/:id', validateJWT, async (req, res) => {
+  const { firstName, lastName, email, profilePicture, profileDescription } = req.body.user;
+  const id = req.params.id;
+  const userID = req.id;
 
   const updatedProfile = {
     firstName,
     lastName,
     email,
-    profilePicture
+    profilePicture,
+    profileDescription
   }
 
   const query = {
@@ -181,12 +183,18 @@ router.put('/edit', validateJWT, async (req, res) => {
   }
 
   try {
-    await User.update(updatedProfile, query);
-
-    res.status(200).json({
-      message: 'profile updated',
-      updatedProfile: updatedProfile 
-    });
+    if (userID === id || req.user.role === 'admin') {
+      await User.update(updatedProfile, query);
+  
+      res.status(200).json({
+        message: 'profile updated',
+        updatedProfile: updatedProfile 
+      });
+    } else {
+      res.status(403).json({
+        message: 'Forbidden'
+      })
+    }
   } 
   catch (error) {
     res.status(403).json({
@@ -196,8 +204,9 @@ router.put('/edit', validateJWT, async (req, res) => {
 })
 
 // ** DELETE USER ** //
-router.delete('/delete', validateJWT, async (req, res) => {
-  const id = req.userID;
+router.delete('/:id', validateJWT, async (req, res) => {
+  const id = req.params.id;
+  const userID = req.id;
 
   try {
     const query = {
@@ -206,10 +215,16 @@ router.delete('/delete', validateJWT, async (req, res) => {
       }
     }
 
-    await User.destroy(query);
-    res.status(200).json({
-      message: "User deleted"
-    });
+    if (userID === id || req.user.role === 'admin') {
+      await User.destroy(query);
+      res.status(200).json({
+        message: "User deleted"
+      });
+    } else {
+      res.status(403).json({
+        message: 'Forbidden'
+      })
+    }
   } 
   catch (error) {
     res.status(500).json({
