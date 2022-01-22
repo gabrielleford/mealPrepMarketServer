@@ -20,3 +20,5 @@ Technology Used:
     01.21       Listing endpoints -> /create, / (gets all), /:id (listing by id), /tag/:tag, /:id (update), /:id (delete)
     01.21       Order endpoints -> /:listingid, /orders (gets users placed orders)
     01.21       User endpoints -> /login, /all users, /:id user, /edit user, /delete user  
+    
+    01.22       Order endpoints ->  /fulfillment (gets orders to be fulfilled by primary user)
