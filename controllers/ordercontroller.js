@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Order } = require('../models');
+const { Order, Listing, User } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
 
 router.post('/:listingid', validateJWT, async (req, res) => {
@@ -42,6 +42,32 @@ router.get('/myOrders', validateJWT, async (req, res) => {
         userId: id
       }
     });
+
+    res.status(200).json(orders);
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to fetch orders: ${error}`
+    });
+  }
+})
+
+// ** GET PRIMARY ORDERS TO BE FULFILLED ** //
+router.get('/fulfillment', validateJWT, async (req, res) => {
+  const id = req.id;
+
+  try {
+    const orders = await Listing.findAll({
+      where: {
+        userId: id
+      },
+      include: [{
+        model: Order,
+        include: [{
+          model: User
+        }]
+      }]
+    })
 
     res.status(200).json(orders);
   } 
