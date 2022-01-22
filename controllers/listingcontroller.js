@@ -113,4 +113,53 @@ router.get('/tag/:tag', async (req, res) => {
   }
 })
 
+// ** UPDATE LISTING ** //
+router.put('/:id', validateJWT, async (req, res) => {
+  const { title, description, image, price, tag } = req.body.listing;
+  const id = req.params.id;
+  const userID = req.id;
+  console.log(`USER REQUESTING: ${userID}`);
+
+  const updatedListing = {
+    title,
+    description,
+    image,
+    price,
+    tag
+  }
+
+  const listingOwner = await Listing.findOne({
+    where: {
+      id: id
+    }
+  })
+
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID) {
+    const query = {
+      where: {
+        id: id,
+        userId: userID
+      }
+    }
+
+    try {
+      await Listing.update(updatedListing, query);
+
+      res.status(201).json({
+        message: 'Listing successfully updated',
+        listing: updatedListing
+      })
+    } 
+    catch (error) {
+      res.status(500).json({
+        message: `Failed to update post: ${error}`
+      });
+    }
+  } else {
+    res.status(403).json({
+      message: 'You can only update your own listing'
+    });
+  }
+})
+
 module.exports = router;
