@@ -12,7 +12,9 @@ User.hasMany(Order, {
 });
 
 Listing.belongsTo(User);
-Listing.hasMany(Order);
+Listing.hasMany(Order, {
+  onDelete: 'cascade'
+});
 
 Order.belongsTo(User);
 Order.belongsTo(Listing);

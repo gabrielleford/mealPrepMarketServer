@@ -32,4 +32,24 @@ router.post('/:listingid', validateJWT, async (req, res) => {
   }
 })
 
+// ** GET SECONDARY USER ORDERS ** //
+router.get('/myOrders', validateJWT, async (req, res) => {
+  const id = req.id;
+
+  try {
+    const orders = await Order.findAll({
+      where: {
+        userId: id
+      }
+    });
+
+    res.status(200).json(orders);
+  } 
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to fetch orders: ${error}`
+    });
+  }
+})
+
 module.exports = router;

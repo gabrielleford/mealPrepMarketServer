@@ -18,5 +18,5 @@ Technology Used:
     
     01.21       database associations, fixed datatype errors  
     01.21       Listing endpoints -> /create, / (gets all), /:id (listing by id), /tag/:tag, /:id (update), /:id (delete)
-    01.21       Order endpoints -> /:listingid  
+    01.21       Order endpoints -> /:listingid, /orders (gets users placed orders)
     01.21       User endpoints -> /login, /all users, /:id user, /edit user, /delete user  
