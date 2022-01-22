@@ -21,4 +21,5 @@ Technology Used:
     01.21       Order endpoints -> /:listingid, /orders (gets users placed orders)
     01.21       User endpoints -> /login, /all users, /:id user, /edit user, /delete user  
     
-    01.22       Order endpoints ->  /fulfillment (gets orders to be fulfilled by primary user), /:id (cancels order)
+    01.22       Order endpoints ->  /fulfillment (gets orders to be fulfilled by primary user), /:id (cancels order)  
+    01.22       Permissions created & added to endpoints
