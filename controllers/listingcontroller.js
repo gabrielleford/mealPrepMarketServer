@@ -118,7 +118,6 @@ router.put('/:id', validateJWT, async (req, res) => {
   const { title, description, image, price, tag } = req.body.listing;
   const id = req.params.id;
   const userID = req.id;
-  console.log(`USER REQUESTING: ${userID}`);
 
   const updatedListing = {
     title,
@@ -132,7 +131,7 @@ router.put('/:id', validateJWT, async (req, res) => {
     where: {
       id: id
     }
-  })
+  });
 
   if (JSON.parse(JSON.stringify(listingOwner)).userId === userID) {
     const query = {
@@ -148,7 +147,7 @@ router.put('/:id', validateJWT, async (req, res) => {
       res.status(201).json({
         message: 'Listing successfully updated',
         listing: updatedListing
-      })
+      });
     } 
     catch (error) {
       res.status(500).json({
@@ -158,6 +157,43 @@ router.put('/:id', validateJWT, async (req, res) => {
   } else {
     res.status(403).json({
       message: 'You can only update your own listing'
+    });
+  }
+})
+
+// ** DELETE LISTING ** //
+router.delete('/:id', validateJWT, async (req, res) => {
+  const id = req.params.id;
+  const userID = req.id;
+
+  const listingOwner = await Listing.findOne({
+    where: {
+      id: id
+    }
+  })
+
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID) {
+    const query = {
+      where: {
+        id: id
+      }
+    }
+
+    try {
+      await Listing.destroy(query)
+
+      res.status(200).json({
+        message: 'Listing successfully deleted'
+      });
+    } 
+    catch (error) {
+      res.status(500).json({
+        message: `Failed to delete listing: ${error}`
+      });
+    }
+  } else {
+    res.status(403).json({
+      message: 'You can only delete your own listing'
     });
   }
 })
