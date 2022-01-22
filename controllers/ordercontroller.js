@@ -78,4 +78,30 @@ router.get('/fulfillment', validateJWT, async (req, res) => {
   }
 })
 
+// ** DELETE ORDER ** //
+router.delete('/:id', validateJWT, async (req, res) => {
+  const id = req.params.id;
+  const userId = req.id;
+
+  try {
+    const query = {
+      where: {
+        id: id,
+        userId: userId
+      }
+    }
+
+    await Order.destroy(query);
+
+    res.status(200).json({
+      message: 'Order canceled'
+    })
+  }
+  catch (error) {
+    res.status(500).json({
+      message: `Failed to cancel order: ${error}`
+    })
+  }
+})
+
 module.exports = router;
