@@ -100,7 +100,7 @@ router.post('/login', async (req, res) => {
           { expiresIn: 60 * 60 * 24 }
         );
 
-        res.status(200).json({
+        res.status(201).json({
           message: 'User successfully logged in',
           user: loginUser,
           sessionToken: token
