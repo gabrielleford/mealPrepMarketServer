@@ -71,7 +71,7 @@ router.post('/register', async (req, res) => {
     } else {
       res.status(500).json({
         message: `Failed to register user: ${error} `
-      })
+      });
     }
   }
 })
@@ -85,7 +85,7 @@ router.post('/login', async (req, res) => {
       where: {
         email: email
       }
-    })
+    });
 
     if (loginUser) {
       const passComparison = await bcrypt.compare(
@@ -108,7 +108,7 @@ router.post('/login', async (req, res) => {
       } else {
         res.status(401).json({
           message: 'Email or password incorrect'
-        })
+        });
       }
     } else {
       res.status(401).json({
@@ -119,8 +119,18 @@ router.post('/login', async (req, res) => {
   catch(error) {
     res.status(500).json({
       message: `Failed to log user in: ${error}`
-    })
+    });
   }
+})
+
+// ** Check Token Validity ** //
+router.post('/checkToken', validateJWT, async (req, res) => {
+  res.status(200).json({
+    message: "Valid token",
+    userId: req.userID,
+    firstName: req.firstName,
+    lastName: req.lastName,
+  });
 })
 
 // ** GET PRIMARY USERS ** //
