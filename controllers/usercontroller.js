@@ -127,9 +127,9 @@ router.post('/login', async (req, res) => {
 router.post('/checkToken', validateJWT, async (req, res) => {
   res.status(200).json({
     message: "Valid token",
-    userId: req.userID,
-    firstName: req.firstName,
-    lastName: req.lastName,
+    userId: req.user.id,
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
   });
 })
 
