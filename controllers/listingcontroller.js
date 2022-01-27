@@ -127,7 +127,6 @@ router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const updatedListing = {
     title,
     description,
-    image,
     price,
     tag
   }
