@@ -23,3 +23,5 @@ Technology Used:
     
     01.22       Order endpoints ->  /fulfillment (gets orders to be fulfilled by primary user), /:id (cancels order)  
     01.22       Permissions created & added to endpoints
+    
+    01.25       Added a user/checkToken endpoint to get user info
