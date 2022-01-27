@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { Listing } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
 const { ROLES, authRole } = require('../middleware/permissions');
+const User = require('../models/user');
 
 // ** CREATE LISTING ** //
 router.post('/create', validateJWT, authRole(ROLES.primary), async(req, res) => {
@@ -82,7 +83,10 @@ router.get('/:id', async (req, res) => {
     const listing = await Listing.findOne({
       where: {
         id: id
-      }
+      },
+      include: [{
+        model: User,
+      }]
     })
 
     res.status(200).json(listing);
