@@ -25,3 +25,5 @@ Technology Used:
     01.22       Permissions created & added to endpoints
     
     01.25       Added a user/checkToken endpoint to get user info
+    
+    02.01       Added listing model to user by id
