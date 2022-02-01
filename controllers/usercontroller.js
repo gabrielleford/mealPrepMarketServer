@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Listing } = require('../models');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -160,7 +160,10 @@ router.get('/:id', async (req, res) => {
       where: {
         id: id,
         role: 'primary'
-      }
+      },
+      include: [{
+        model: Listing,
+      }]
     });
 
     res.status(200).json(user);
