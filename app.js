@@ -4,9 +4,11 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 const dbConnection = require('./db');
-const controllers = require('./controllers')
+const controllers = require('./controllers');
+const middleware = require('./middleware');
 
 app.use(express.json());
+app.use(middleware.CORS);
 
 app.use('/user', controllers.usercontroller);
 app.use('/listing', controllers.listingcontroller);
