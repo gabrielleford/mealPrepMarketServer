@@ -41,7 +41,10 @@ router.get('/myOrders', validateJWT, async (req, res) => {
     const orders = await Order.findAll({
       where: {
         userId: id
-      }
+      },
+      include: [{
+        model: Listing
+      }]
     });
 
     res.status(200).json(orders);
