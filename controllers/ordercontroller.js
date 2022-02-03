@@ -71,7 +71,7 @@ router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req,
     if (JSON.parse(JSON.stringify(listingOwner)).userId === userID  || req.user.role === 'admin') {
       const orders = await Listing.findAll({
         where: {
-          userId: id
+          userId: userID,
         },
         include: [{
           model: Order,
