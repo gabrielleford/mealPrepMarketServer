@@ -15,6 +15,10 @@ const Order = db.define('order', {
   fulfillmentMethod: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  listingOwner: {
+    type: DataTypes.UUID,
+    allowNull: false
   }
 });
 

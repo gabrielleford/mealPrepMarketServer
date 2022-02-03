@@ -4,7 +4,7 @@ const validateJWT = require('../middleware/validateJWT');
 const { authRole, ROLES } = require('../middleware/permissions');
 
 router.post('/:listingid', validateJWT, async (req, res) => {
-  const { quantity, fulfillmentMethod } = req.body.order;
+  const { quantity, fulfillmentMethod, listingOwner } = req.body.order;
   const listingId = req.params.listingid;
   
   //Backend form validation
@@ -19,6 +19,7 @@ router.post('/:listingid', validateJWT, async (req, res) => {
       fulfillmentMethod,
       userId: req.user.id,
       listingId: listingId,
+      listingOwner,
     });
 
     res.status(201).json({
@@ -61,24 +62,26 @@ router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req,
   const id = req.params.id;
   const userID = req.id;
 
-  const listingOwner = await Listing.findAll({
+  const owner = await Order.findAll({
     where: {
-      userId: id
+      listingOwner: id
     }
   })
 
   try {
-    if (JSON.parse(JSON.stringify(listingOwner))[0].userId === userID  || req.user.role === 'admin') {
-      const orders = await Listing.findAll({
+    if (JSON.parse(JSON.stringify(owner))[0].listingOwner === userID  || req.user.role === 'admin') {
+      const orders = await Order.findAll({
         where: {
-          userId: userID,
+          listingOwner: id,
         },
         include: [{
-          model: Order,
-          include: [{
-            model: User
-          }]
-        }]
+          model: User,
+          attributes: ['firstName', 'lastName'],
+        },
+        {
+          model: Listing,
+          attributes: ['title', 'price']
+        }],
       })
   
       res.status(200).json(orders);

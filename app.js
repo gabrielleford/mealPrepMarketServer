@@ -28,14 +28,31 @@ dbConnection.authenticate()
 
 
   /* Super Mario 
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQwOGU0YWU2LTRhYTYtNGU1ZS1iOTg5LTJiYzRiODJmZjZhZSIsImlhdCI6MTY0Mjg2ODA4MywiZXhwIjoxNjQyOTU0NDgzfQ.YmNE8RHzQvPKzgCysVMtmUUbskj_WY0uM1bSv1CFH8o
-  Mario12!
+  {
+    "user": {
+      "email": "mario@email.com",
+      "password": "Mario12!"
+    }
+  }
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2NTQ1MDY4LTY5ODgtNGY0My1hNzRhLTEwZTM1MDIxZjc2NSIsImlhdCI6MTY0MzkxMTM3OCwiZXhwIjoxNjQzOTk3Nzc4fQ.DUYGMniZXBr128p9Xg04zuWQBIFYnfkRemDPShO9pgo
 
-  Michael Scott
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFkYzNjODkwLWUyNzItNGU4Yi1hYWFmLTI4NTE5MGZiYTQ4YiIsImlhdCI6MTY0Mjc4OTY2OSwiZXhwIjoxNjQyODc2MDY5fQ.-0_2enVZQRenOWBghmwBMKAS3QpBAuO0cEOAc428BQc
-  Password123!
+  Dwight Schrute
+  23011121-6c44-460b-805f-a6f337da08ac
+  {
+    "user": {
+        "email": "d.schrute@email.com",
+        "password": "Password1!"
+    }
+}
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzMDExMTIxLTZjNDQtNDYwYi04MDVmLWE2ZjMzN2RhMDhhYyIsImlhdCI6MTY0MzkxMTYxOSwiZXhwIjoxNjQzOTk4MDE5fQ.t7tcQAAWuSkH9gUGs1CfKE-hDLlfK5N1fRA-tWBjdhE
+
 
   Jim Halpert
-  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRkNzRmMGE3LTg0OGQtNGQ4Mi1iOWM0LWI1MTM5NWEyMTQ4YiIsImlhdCI6MTY0Mjg2OTkzMywiZXhwIjoxNjQyOTU2MzMzfQ.ZT03dt94Hvyh3n0zxRwh5ppBaUXXM863HjUJUenXppI
-  Password123!
+  {
+    "user": {
+      "email": "j.halpert@email.com",
+      "password": "Password1!"
+    }
+  }
+  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVkNjI1YmIzLTg5MzUtNDExZi1iZjdiLWRmOWFjN2YzM2U2YSIsImlhdCI6MTY0MzkxMTQzMCwiZXhwIjoxNjQzOTk3ODMwfQ.jWNo6uAE7Iwggv9BkMUQWUFlzbNkp2HJzEl-ACYh99Y
   */
