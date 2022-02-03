@@ -61,8 +61,14 @@ router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req,
   const id = req.params.id;
   const userID = req.id;
 
+  const listingOwner = await Listing.findAll({
+    where: {
+      userId: id
+    }
+  })
+
   try {
-    if (userID === id || req.user.role === 'admin') {
+    if (JSON.parse(JSON.stringify(listingOwner)).userId === userID  || req.user.role === 'admin') {
       const orders = await Listing.findAll({
         where: {
           userId: id
@@ -90,16 +96,22 @@ router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req,
 })
 
 // ** DELETE ORDER ** //
-router.delete('/:id', validateJWT, authRole(ROLES.secondary), async (req, res) => {
+router.delete('/:id', validateJWT, async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 
+  const orderOwner = await Order.findOne({
+    where: {
+      id: id
+    }
+  })
+
   try {
-    if (userID === id || req.user.role === 'admin') {
+    if (JSON.parse(JSON.stringify(orderOwner)).userId === userID  || req.user.role === 'admin') {
       const query = {
         where: {
           id: id,
-          userId: userId
+          userId: userID
         }
       }
   
