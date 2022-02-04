@@ -4,7 +4,8 @@ Server for Meal Prep Market app. Users can sign up to sell their meal prep servi
 [Client Repo](https://github.com/gabrielleford/mealPrepMarketClient)
 
 Technology Used:
-              Node.js PostGreSQL, Sequelize
+
+    Node.js PostGreSQL, Sequelize
 
 ## Created by Gabrielle Ford
 [GitHub](https://github.com/gabrielleford)  
