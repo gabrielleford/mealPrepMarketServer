@@ -130,6 +130,10 @@ router.post('/checkToken', validateJWT, async (req, res) => {
     userId: req.user.id,
     firstName: req.user.firstName,
     lastName: req.user.lastName,
+    email: req.user.email,
+    profilePicture: req.user.profilePicture,
+    profileDescription: req.user.profileDescription,
+    role: req.user.role,
   });
 })
 
