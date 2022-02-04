@@ -7,7 +7,7 @@ const dbConnection = require('./db');
 const controllers = require('./controllers');
 const middleware = require('./middleware');
 
-// app.use(middleware.CORS);
+app.use(middleware.CORS);
 app.use(express.json());
 
 app.use('/user', controllers.usercontroller);
