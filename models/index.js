@@ -16,9 +16,9 @@ Listing.belongsTo(User);
 Listing.hasMany(Order, {
   onDelete: 'cascade'
 });
-Listing.hasMany(Review, {
-  onDelete: 'cascade'
-})
+// Listing.hasMany(Review, {
+//   onDelete: 'cascade'
+// })
 
 Order.belongsTo(User);
 Order.belongsTo(Listing);
