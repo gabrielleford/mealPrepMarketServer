@@ -181,11 +181,12 @@ router.get('/:id', async (req, res) => {
 
 // ** EDIT USER INFO ** //
 router.put('/:id', validateJWT, async (req, res) => {
-  const { firstName, lastName, email, profilePicture, profileDescription } = req.body.user;
+  const { role, firstName, lastName, email, profilePicture, profileDescription } = req.body.user;
   const id = req.params.id;
   const userID = req.id;
 
   const updatedProfile = {
+    role,
     firstName,
     lastName,
     email,
