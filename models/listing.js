@@ -13,7 +13,7 @@ const Listing = db.define('listing', {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   image: {
