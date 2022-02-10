@@ -1,13 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const cors = require('cors');
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}, exposedHeaders,'Content-Range'));
+// const cors = require('cors');
+// app.use(cors({credentials: true, origin: 'http://localhost:3000'}, exposedHeaders,'Content-Range'));
+app.use(middleware.CORS);
 const dbConnection = require('./db');
 const controllers = require('./controllers');
 const middleware = require('./middleware');
 
-app.use(middleware.CORS);
 app.use(express.json());
 
 app.use('/user', controllers.usercontroller);
