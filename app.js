@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-app.use(cors({credentials: true, origin: '*'}, exposedHeaders,'Content-Range'));
+app.use(cors({credentials: true, origin: '*'}));
 app.use(middleware.CORS);
 const dbConnection = require('./db');
 const controllers = require('./controllers');
