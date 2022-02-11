@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 // app.options('*', cors());
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+app.use(cors());
 app.use(middleware.CORS);
 const dbConnection = require('./db');
 const controllers = require('./controllers');
