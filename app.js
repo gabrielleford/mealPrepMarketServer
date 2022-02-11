@@ -2,12 +2,24 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
-// app.options('*', cors());
-app.use(cors());
-app.use(middleware.CORS);
 const dbConnection = require('./db');
 const controllers = require('./controllers');
 const middleware = require('./middleware');
+
+let whitelist = ['http://localhost:3000', 'https://mealprepmarket.herokuapp.com']
+app.use(cors({
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type, Accept, Authorization, X-Requested-With, Origin',
+  
+}))
 
 app.use(express.json());
 
