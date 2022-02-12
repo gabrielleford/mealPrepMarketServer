@@ -155,6 +155,32 @@ router.get('/?', async (req,res) => {
   }
 })
 
+// ** Get Users Info ** //
+router.get('/userInfo/:id', validateJWT, async (req, res) => {
+  const id = req.params.id;
+  const userID = req.user.id;
+
+  try {
+    if (userID === id || req.user.role === 'admin') {
+      await User.update(updatedProfile, query);
+  
+      res.status(200).json({
+        message: 'profile updated',
+        updatedProfile: updatedProfile 
+      });
+    } else {
+      res.status(403).json({
+        message: 'Forbidden'
+      })
+    }
+  } 
+  catch (error) {
+    res.status(403).json({
+      message: `Failed to update: ${error}`
+    });
+  }
+})
+
 // ** GET PRIMARY USER BY ID ** //
 router.get('/:id', async (req, res) => {
   const id = req.params.id;
