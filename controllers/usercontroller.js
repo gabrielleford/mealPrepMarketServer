@@ -162,12 +162,13 @@ router.get('/userInfo/:id', validateJWT, async (req, res) => {
 
   try {
     if (userID === id || req.user.role === 'admin') {
-      await User.update(updatedProfile, query);
-  
-      res.status(200).json({
-        message: 'profile updated',
-        updatedProfile: updatedProfile 
-      });
+      const user = await User.findOne({
+        where: {
+          id: id
+        }
+      })
+      
+      res.status(200).json(user)
     } else {
       res.status(403).json({
         message: 'Forbidden'
@@ -176,7 +177,7 @@ router.get('/userInfo/:id', validateJWT, async (req, res) => {
   } 
   catch (error) {
     res.status(403).json({
-      message: `Failed to update: ${error}`
+      message: `Failed to get user: ${error}`
     });
   }
 })
