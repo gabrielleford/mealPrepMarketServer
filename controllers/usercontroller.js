@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const validateJWT = require('../middleware/validateJWT');
 const { authRole, ROLES } = require('../middleware/permissions');
+const { Op } = require('sequelize');
 
 // ** REGISTER USER ** //
 router.post('/register', async (req, res) => {
@@ -332,11 +333,31 @@ router.post('/adminLogin', async (req, res) => {
   }
 })
 
-// ** Get All Users ** //
+// ** GET ALL USERS ** //
 router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
-    const users = await User.findAll()
+    const users = await User.findAll({
+      where: {
+        [Op.and]: [
+          {role: 'primary'},
+          {role: 'secondary'}
+        ]
+      }
+    })
 
+    res.status(200).json(users)
+  } catch (error) {
+    res.status(500).json({
+      message: `Failed to get users: ${error}`
+    })
+  }
+})
+
+// ** GET ADMINS & USERS ** //
+// endpoint for main admin
+router.get('/admins', validateJWT, authRole(ROLES.mainAdmin), async (req, res) => {
+  try {
+    const users = await User.findAll()
     res.status(200).json(users)
   } catch (error) {
     res.status(500).json({

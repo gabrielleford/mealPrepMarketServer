@@ -9,7 +9,7 @@ const User = db.define('user', {
     allowNull: false,
   },
   role: {
-    type: DataTypes.ENUM('admin', 'primary', 'secondary'),
+    type: DataTypes.ENUM('main admin', 'admin', 'primary', 'secondary'),
     allowNull: false
   },
   firstName: {
