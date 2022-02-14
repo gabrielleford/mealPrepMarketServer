@@ -292,7 +292,12 @@ router.post('/adminLogin', async (req, res) => {
   try {
     const loginUser = await User.findOne({
       where: {
-        role: 'admin',
+        [Op.or]: [{
+          role: 'admin'
+        },
+        {
+          role: 'main admin'
+        }],
         email: email,
       }
     });
