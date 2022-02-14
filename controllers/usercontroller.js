@@ -334,9 +334,9 @@ router.post('/adminLogin', async (req, res) => {
 })
 
 // ** GET ALL USERS ** //
-router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
+router.get('/allUsers', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
-    const users = await User.findAll({
+    const allUsers = await User.findAll({
       // where: {
       //   [Op.and]: [
       //     {role: 'primary'},
@@ -345,7 +345,7 @@ router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
       // }
     })
 
-    res.status(200).json(users)
+    res.status(200).json(allUsers)
   } catch (error) {
     res.status(500).json({
       message: `Failed to get users: ${error}`
