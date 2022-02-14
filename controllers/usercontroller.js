@@ -337,12 +337,12 @@ router.post('/adminLogin', async (req, res) => {
 router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
     const users = await User.findAll({
-      where: {
-        [Op.and]: [
-          {role: 'primary'},
-          {role: 'secondary'}
-        ]
-      }
+      // where: {
+      //   [Op.and]: [
+      //     {role: 'primary'},
+      //     {role: 'secondary'}
+      //   ]
+      // }
     })
 
     res.status(200).json(users)
