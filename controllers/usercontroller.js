@@ -11,61 +11,6 @@ const { Op } = require('sequelize');
            * ADMIN ENDPOINTS *
   --------------------------------------- */
 
-// ** Admin Login ** //
-router.post('/adminLogin', async (req, res) => {
-  const { email, password } = req.body.user;
-
-  try {
-    const loginUser = await User.findOne({
-      where: {
-        [Op.or]: [
-          {role: 'admin'},
-          {role: 'main admin'}
-        ],
-        email: email,
-      }
-    });
-
-    if (loginUser) {
-      const passComparison = await bcrypt.compare(
-        password,
-        loginUser.password
-      );
-
-      if(passComparison) {
-        let token = jwt.sign(
-          { id: loginUser.id },
-          process.env.JWT_SECRET,
-          { expiresIn: 60 * 60 * 24 }
-        );
-
-        res.status(201).json({
-          message: 'User successfully logged in',
-          user: loginUser,
-          sessionToken: token
-        });
-      } else {
-        res.status(401).json({
-          message: 'Email or password incorrect'
-        });
-      }
-    } else {
-      res.status(401).json({
-        message: 'Email or password incorrect',
-      });
-    }
-  }
-  catch(error) {
-    res.status(500).json({
-      message: `Failed to log user in: ${error}`
-    });
-  }
-})
-
-/* -------------------------------------- 
-           * REGULAR ENDPOINTS *
-  --------------------------------------- */
-
 // ** GET ALL USERS ** //
 router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
@@ -100,7 +45,9 @@ router.get('/admins', validateJWT, authRole(ROLES.mainAdmin), async (req, res) =
   }
 })
 
-
+/* -------------------------------------- 
+           * REGULAR ENDPOINTS *
+  --------------------------------------- */
 
 // ** REGISTER USER ** //
 router.post('/register', async (req, res) => {
@@ -181,6 +128,57 @@ router.post('/login', async (req, res) => {
     const loginUser = await User.findOne({
       where: {
         email: email
+      }
+    });
+
+    if (loginUser) {
+      const passComparison = await bcrypt.compare(
+        password,
+        loginUser.password
+      );
+
+      if(passComparison) {
+        let token = jwt.sign(
+          { id: loginUser.id },
+          process.env.JWT_SECRET,
+          { expiresIn: 60 * 60 * 24 }
+        );
+
+        res.status(201).json({
+          message: 'User successfully logged in',
+          user: loginUser,
+          sessionToken: token
+        });
+      } else {
+        res.status(401).json({
+          message: 'Email or password incorrect'
+        });
+      }
+    } else {
+      res.status(401).json({
+        message: 'Email or password incorrect',
+      });
+    }
+  }
+  catch(error) {
+    res.status(500).json({
+      message: `Failed to log user in: ${error}`
+    });
+  }
+})
+
+// ** Admin Login ** //
+router.post('/adminLogin', async (req, res) => {
+  const { email, password } = req.body.user;
+
+  try {
+    const loginUser = await User.findOne({
+      where: {
+        [Op.or]: [
+          {role: 'admin'},
+          {role: 'main admin'}
+        ],
+        email: email,
       }
     });
 
