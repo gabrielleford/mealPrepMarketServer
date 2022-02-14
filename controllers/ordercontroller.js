@@ -2,7 +2,9 @@ const router = require('express').Router();
 const { Order, Listing, User } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
 const { authRole, ROLES } = require('../middleware/permissions');
+const { Sequelize } = require('sequelize');
 
+// ** PLACE ORDER ** //
 router.post('/:listingid', validateJWT, async (req, res) => {
   const { quantity, fulfillmentMethod, listingOwner } = req.body.order;
   const listingId = req.params.listingid;
@@ -133,6 +135,53 @@ router.delete('/:id', validateJWT, async (req, res) => {
   catch (error) {
     res.status(500).json({
       message: `Failed to cancel order: ${error}`
+    })
+  }
+})
+
+/* -------------------------------------- 
+           * ADMIN ENDPOINTS *
+  --------------------------------------- */
+
+// ** GET ALL ORDERS ** //
+router.get('/', validateJWT, authRole(ROLES.admin), async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      include: [{
+        model: User,
+        where: {
+          state: Sequelize.col('listingOwner')
+        },
+      }]
+    })
+    res.status(200).json(orders)
+  } catch (error) {
+    res.status(500).json({
+      message: `Failed to fetch orders: ${error}`
+    })
+  }
+})
+
+// ** VIEW INDIVIDUAL ORDER ** //
+router.get('/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const order = await Order.findOne({
+      where: {
+        id: id
+      },
+      include: [{
+        model: User
+      },
+      {
+        model: Listing
+      }]
+    })
+    res.status(200).json(order)
+  } catch (error) {
+    res.status(500).json({
+      message: `Failed to get order: ${error}`
     })
   }
 })
