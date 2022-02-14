@@ -335,22 +335,32 @@ router.post('/adminLogin', async (req, res) => {
 
 // ** GET ALL USERS ** //
 router.get('/allUsers', validateJWT, authRole(ROLES.admin), async (req, res) => {
-  try {
-    const allUsers = await User.findAll({
-      // where: {
-      //   [Op.and]: [
-      //     {role: 'primary'},
-      //     {role: 'secondary'}
-      //   ]
-      // }
-    })
 
-    res.status(200).json(allUsers)
-  } catch (error) {
+  try {
+    const listings = await Listing.findAll();
+    res.status(200).json(listings);
+  } 
+  catch (error) {
     res.status(500).json({
-      message: `Failed to get users: ${error}`
-    })
+      message: `Failed to get listings: ${error}`
+    });
   }
+  // try {
+  //   const allUsers = await User.findAll({
+  //     // where: {
+  //     //   [Op.and]: [
+  //     //     {role: 'primary'},
+  //     //     {role: 'secondary'}
+  //     //   ]
+  //     // }
+  //   })
+
+  //   res.status(200).json(allUsers)
+  // } catch (error) {
+  //   res.status(500).json({
+  //     message: `Failed to get users: ${error}`
+  //   })
+  // }
 })
 
 // ** GET ADMINS & USERS ** //
