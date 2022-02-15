@@ -122,6 +122,7 @@ router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const updatedListing = {
     title,
     description,
+    image,
     price,
     tag
   }
@@ -132,11 +133,10 @@ router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
     }
   });
 
-  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin') {
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin' || req.user.role === 'main admin') {
     const query = {
       where: {
         id: id,
-        userId: userID
       }
     }
 
@@ -171,7 +171,7 @@ router.delete('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => 
     }
   })
 
-  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin') {
+  if (JSON.parse(JSON.stringify(listingOwner)).userId === userID || req.user.role === 'admin' || req.user.role === 'main admin') {
     const query = {
       where: {
         id: id
