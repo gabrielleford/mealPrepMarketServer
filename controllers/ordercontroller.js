@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Order, Listing, User } = require('../models');
 const validateJWT = require('../middleware/validateJWT');
 const { authRole, ROLES } = require('../middleware/permissions');
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 
 // ** PLACE ORDER ** //
 router.post('/:listingid', validateJWT, async (req, res) => {
@@ -146,12 +146,19 @@ router.delete('/:id', validateJWT, async (req, res) => {
 // ** GET ALL ORDERS ** //
 router.get('/', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
+    const userOrder = await Order.findAll({
+      attributes: ['userId']
+    })
+
     const orders = await Order.findAll({
       include: [{
+        model: Listing,
+        include: [{
+          model: User
+        }],
+      },
+      {
         model: User,
-        where: {
-          state: Sequelize.col('listingOwner')
-        },
       }]
     })
     res.status(200).json(orders)
@@ -172,10 +179,13 @@ router.get('/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
         id: id
       },
       include: [{
-        model: User
+        model: Listing,
+        include: [{
+          model: User
+        }]
       },
       {
-        model: Listing
+        model: User
       }]
     })
     res.status(200).json(order)
