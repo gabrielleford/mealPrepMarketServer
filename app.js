@@ -23,6 +23,7 @@ app.use(cors({
 
 app.use(express.json());
 
+app.use('/admin', controllers.admincontroller);
 app.use('/user', controllers.usercontroller);
 app.use('/listing', controllers.listingcontroller);
 app.use('/order', controllers.ordercontroller);

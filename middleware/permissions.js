@@ -7,7 +7,7 @@ const ROLES = {
 
 function authRole(role) {
   return (req, res, next) => {
-    if (req.user.role === role || req.user.role === 'admin') {
+    if (req.user.role === role || req.user.role === 'admin' || req.user.role === 'main admin') {
       next()
     } else {
       res.status(403).json({
