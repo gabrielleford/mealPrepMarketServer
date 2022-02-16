@@ -23,7 +23,7 @@ router.post('/adminLogin', async (req, res) => {
         loginUser.password
       );
 
-      if(passComparison && loginUser.role === 'admin' || passComparison && loginUser.role === 'main admin') {
+      if(passComparison) {
         let token = jwt.sign(
           { id: loginUser.id },
           process.env.JWT_SECRET,
