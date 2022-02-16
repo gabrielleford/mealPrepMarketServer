@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
 const validateJWT = require('../middleware/validateJWT');
-const { mainAdmin, ROLES } = require('../middleware/permissions');
+const { authRole, mainAdmin, ROLES } = require('../middleware/permissions');
 
 /* -------------------------------------- 
            * ADMIN ENDPOINTS *
