@@ -8,59 +8,6 @@ const { authRole, ROLES } = require('../middleware/permissions');
 const { Op } = require('sequelize');
 
 /* -------------------------------------- 
-           * ADMIN ENDPOINTS *
-  --------------------------------------- */
-
-// ** GET ALL USERS ** //
-router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
-  try {
-    const users = await User.findAll({
-      where: {
-        [Op.or]: [
-          {role: 'primary'},
-          {role: 'secondary'}
-        ]
-      }
-    })
-    res.status(200).json(users)
-  }
-  catch (error) {
-    res.status(500).json(error)
-  }
-})
-
-// ** GET ADMINS & USERS ** //
-// endpoint for main admin
-router.get('/admins', validateJWT, authRole(ROLES.mainAdmin), async (req, res) => {
-  try {
-    const users = await User.findAll()
-    res.status(200).json(users)
-  } catch (error) {
-    res.status(500).json({
-      message: `Failed to get users: ${error}`
-    })
-  }
-})
-
-// ** GET INDIVIDUAL USERS - EVEN SECONDARY ** //
-router.get('/any/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const user = await User.findOne({
-      where: {
-        id: id
-      }
-    })
-    res.status(200).json(user)
-  } catch(error) {
-    res.status(500).json({
-      message: `Failed to get user: ${error}`
-    })
-  }
-})
-
-/* -------------------------------------- 
            * REGULAR ENDPOINTS *
   --------------------------------------- */
 
@@ -249,7 +196,11 @@ router.get('/:id', async (req, res) => {
     const user = await User.findOne({
       where: {
         id: id,
-        role: 'primary'
+        [Op.or]: [
+          {role: 'main admin'},
+          {role: 'admin'},
+          {role: 'primary'},
+        ]
       },
       include: [{
         model: Listing,

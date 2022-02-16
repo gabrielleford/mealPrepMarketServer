@@ -119,6 +119,31 @@ router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 
+    // Backend form validation
+    if (title.length < 3) 
+    return res.status(400).json({
+      message: 'Title must be at least 3 characters'
+    });
+
+  if (description.length < 20) return res.status(400).json({ message: 'Description must be at least 20 characters'})
+  else if (description.length > 2000) return res.status(400).json({
+    message: `Description is ${description.length - 2000} characters over the limit`
+  })
+
+  if (!image) 
+    return res.status(400).json({
+      message: 'Image required'
+    });
+
+  if (!price) 
+    return res.status(400).json({
+      message: 'Price required'
+    });
+  else if (price > 999.99)
+    return res.status(400).json({
+      message: 'Price too high'
+    });
+
   const updatedListing = {
     title,
     description,
