@@ -58,7 +58,7 @@ router.post('/create', validateJWT, authRole(ROLES.primary), async(req, res) => 
 });
 
 // ** GET ALL LISTINGS ** //
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
   try {
     const listings = await Listing.findAll();
     res.status(200).json(listings);
@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 })
 
 // ** GET LISTING BY ID ** //
-router.get('/:id', async (req, res) => {
+router.get('/one/:id', async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -114,7 +114,7 @@ router.get('/tag/:tag', async (req, res) => {
 })
 
 // ** UPDATE LISTING ** //
-router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
+router.put('/edit/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const { title, description, image, price, tag } = req.body.listing;
   const id = req.params.id;
   const userID = req.id;
@@ -186,7 +186,7 @@ router.put('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
 })
 
 // ** DELETE LISTING ** //
-router.delete('/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
+router.delete('/delete/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 

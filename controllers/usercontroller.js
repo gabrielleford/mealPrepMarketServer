@@ -143,7 +143,7 @@ router.post('/checkToken', validateJWT, async (req, res) => {
 })
 
 // ** GET PRIMARY USERS ** //
-router.get('/?', async (req,res) => {
+router.get('/primary', async (req,res) => {
   try {
     const users = await User.findAll({
       where: {
@@ -188,7 +188,7 @@ router.get('/userInfo/:id', validateJWT, async (req, res) => {
 })
 
 // ** GET PRIMARY USER BY ID ** //
-router.get('/:id', async (req, res) => {
+router.get('/prepper/:id', async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -216,7 +216,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // ** EDIT USER INFO ** //
-router.put('/:id', validateJWT, async (req, res) => {
+router.put('/edit/:id', validateJWT, async (req, res) => {
   const { role, firstName, lastName, email, profilePicture, profileDescription } = req.body.user;
   const id = req.params.id;
   const userID = req.id;
@@ -258,7 +258,7 @@ router.put('/:id', validateJWT, async (req, res) => {
 })
 
 // ** DELETE USER ** //
-router.delete('/:id', validateJWT, async (req, res) => {
+router.delete('/delete/:id', validateJWT, async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 

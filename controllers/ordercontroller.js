@@ -5,7 +5,7 @@ const { authRole, ROLES } = require('../middleware/permissions');
 const { Sequelize, Op } = require('sequelize');
 
 // ** PLACE ORDER ** //
-router.post('/:listingid', validateJWT, async (req, res) => {
+router.post('/submit/:listingid', validateJWT, async (req, res) => {
   const { quantity, fulfillmentMethod, listingOwner } = req.body.order;
   const listingId = req.params.listingid;
   
@@ -101,7 +101,7 @@ router.get('/fulfillment/:id', validateJWT, authRole(ROLES.primary), async (req,
 })
 
 // ** DELETE ORDER ** //
-router.delete('/:id', validateJWT, async (req, res) => {
+router.delete('/delete/:id', validateJWT, async (req, res) => {
   const id = req.params.id;
   const userID = req.id;
 
@@ -144,7 +144,7 @@ router.delete('/:id', validateJWT, async (req, res) => {
   --------------------------------------- */
 
 // ** GET ALL ORDERS ** //
-router.get('/', validateJWT, authRole(ROLES.admin), async (req, res) => {
+router.get('/orders', validateJWT, authRole(ROLES.admin), async (req, res) => {
   try {
     const userOrder = await Order.findAll({
       attributes: ['userId']
@@ -170,7 +170,7 @@ router.get('/', validateJWT, authRole(ROLES.admin), async (req, res) => {
 })
 
 // ** VIEW INDIVIDUAL ORDER ** //
-router.get('/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
+router.get('/order/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
   const id = req.params.id;
 
   try {

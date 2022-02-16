@@ -59,32 +59,32 @@ router.get('/any/:id', validateJWT, authRole(ROLES.admin), async (req, res) => {
   }
 })
 
-// ** MAKE USER ADMIN ** //
-router.post('/:id', validateJWT, mainAdmin(ROLES.mainAdmin), async (req, res) => {
-  const { role } = req.body.user;
-  const id = req.params.id;
+// // ** MAKE USER ADMIN ** //
+// router.post('/:id', validateJWT, mainAdmin(ROLES.mainAdmin), async (req, res) => {
+//   const { role } = req.body.user;
+//   const id = req.params.id;
 
-  const updateRole = {
-    role,
-  }
+//   const updateRole = {
+//     role,
+//   }
 
-  const query = {
-    where: {
-      id: id
-    }
-  }
+//   const query = {
+//     where: {
+//       id: id
+//     }
+//   }
 
-  try {
-    await User.update(updateRole, query)
-    res.status(200).json({
-      message: 'Successfully updated user',
-      userRole: updateRole
-    })
-  } catch (error) {
-    res.status(500).json({
-      message: `Failed to update user: ${error}`
-    })
-  }
-})
+//   try {
+//     await User.update(updateRole, query)
+//     res.status(200).json({
+//       message: 'Successfully updated user',
+//       userRole: updateRole
+//     })
+//   } catch (error) {
+//     res.status(500).json({
+//       message: `Failed to update user: ${error}`
+//     })
+//   }
+// })
 
 module.exports = router;
