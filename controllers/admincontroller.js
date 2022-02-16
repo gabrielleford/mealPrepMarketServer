@@ -13,10 +13,6 @@ router.post('/adminLogin', async (req, res) => {
   try {
     const loginUser = await User.findOne({
       where: {
-        [Op.or]: [
-          {role: 'admin'},
-          {role: 'main admin'}
-        ],
         email: email,
       }
     });
@@ -27,7 +23,7 @@ router.post('/adminLogin', async (req, res) => {
         loginUser.password
       );
 
-      if(passComparison) {
+      if(passComparison && loginUser.role === 'admin' || passComparison && loginUser.role === 'main admin') {
         let token = jwt.sign(
           { id: loginUser.id },
           process.env.JWT_SECRET,
