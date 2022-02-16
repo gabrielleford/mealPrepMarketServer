@@ -6,7 +6,7 @@ const dbConnection = require('./db');
 const controllers = require('./controllers');
 const middleware = require('./middleware');
 
-let whitelist = ['http://localhost:3000', 'https://mealprepmarket.herokuapp.com']
+let whitelist = ['http://localhost:3000', 'https://mealprepmarket.herokuapp.com', 'https://mealprepmarket-admin.herokuapp.com']
 app.use(cors({
   origin: function(origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
