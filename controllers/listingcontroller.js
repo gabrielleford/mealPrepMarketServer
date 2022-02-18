@@ -93,26 +93,6 @@ router.get('/one/:id', async (req, res) => {
   }
 })
 
-// ** GET LISTINGS BY TAG ** //
-router.get('/tag/:tag', async (req, res) => {
-  const tag = req.params.tag;
-
-  try {
-    const listingsByTag = await Listing.findAll({
-      where: {
-        tag: tag
-      }
-    });
-
-    res.status(200).json(listingsByTag);
-  } 
-  catch (error) {
-    res.status(500).json({
-      message: `Failed to fetch listings: ${error}`
-    })
-  }
-})
-
 // ** UPDATE LISTING ** //
 router.put('/edit/:id', validateJWT, authRole(ROLES.primary), async (req, res) => {
   const { title, description, image, price, tag } = req.body.listing;

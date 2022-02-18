@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Listing } = require('../models');
+const { User, Listing, Order } = require('../models');
 const { UniqueConstraintError } = require('sequelize/lib/errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -140,6 +140,59 @@ router.post('/checkToken', validateJWT, async (req, res) => {
     profileDescription: req.user.profileDescription,
     role: req.user.role,
   });
+})
+
+// ** Check for orders ** //
+router.get('/checkOrders', validateJWT, async (req, res) => {
+  const id = req.user.id
+  let orders;
+  let listings;
+  let fulfillment;
+
+
+  try {
+    if (req.user.role !== 'secondary') {
+      orders = await Order.findAll({
+        where: {
+          userId: id
+        }
+      })
+
+      fulfillment = await Order.findAll({
+        where: {
+          listingOwner: id
+        }
+      })
+
+      listings = await Listing.findAll({
+        where: {
+          userId: id
+        }
+      })
+    } else {
+      orders = await Order.findAll({
+        where: {
+          userId: id,
+        }
+      })
+    }
+
+    if (req.user.role !== 'secondary') {
+      res.status(200).json({
+        orders: orders,
+        listings: listings,
+        fulfillment: fulfillment,
+      });
+    } else {
+      res.status(200).json({
+        orders: orders,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: `Failed: ${error}`
+    })
+  }
 })
 
 // ** GET PRIMARY USERS ** //
