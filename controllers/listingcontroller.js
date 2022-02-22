@@ -60,7 +60,9 @@ router.post('/create', validateJWT, authRole(ROLES.primary), async(req, res) => 
 // ** GET ALL LISTINGS ** //
 router.get('/all', async (req, res) => {
   try {
-    const listings = await Listing.findAll();
+    const listings = await Listing.findAll({
+      order: [['createdAt', 'DESC']]
+    });
     res.status(200).json(listings);
   } 
   catch (error) {

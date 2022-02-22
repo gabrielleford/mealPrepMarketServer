@@ -3,6 +3,7 @@ const { User } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Op } = require('sequelize');
+
 const validateJWT = require('../middleware/validateJWT');
 const { authRole, mainAdmin, ROLES } = require('../middleware/permissions');
 
@@ -19,7 +20,10 @@ router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
           {role: 'primary'},
           {role: 'secondary'}
         ]
-      }
+      },
+      order: [
+        ['lastName']
+      ]
     })
     res.status(200).json(users)
   }
@@ -30,9 +34,13 @@ router.get('/users', validateJWT, authRole(ROLES.admin), async (req, res) => {
 
 // ** GET ADMINS & USERS ** //
 // endpoint for main admin
-router.get('/admins', validateJWT, authRole(ROLES.mainAdmin), async (req, res) => {
+router.get('/admins', validateJWT, mainAdmin(ROLES.mainAdmin), async (req, res) => {
   try {
-    const users = await User.findAll()
+    const users = await User.findAll({
+      order: [
+        ['lastName']
+      ]
+    })
     res.status(200).json(users)
   } catch (error) {
     res.status(500).json({
