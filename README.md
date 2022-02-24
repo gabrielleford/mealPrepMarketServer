@@ -1,7 +1,8 @@
 # Meal Prep Market
 
 Server for Meal Prep Market app. Users can sign up to sell their meal prep services or as a customer interested in purchasing prepped meals.  
-[Client Repo](https://github.com/gabrielleford/mealPrepMarketClient)
+[Client Repo](https://github.com/gabrielleford/mealPrepMarketClient)  
+[Admin Client Repo](https://github.com/gabrielleford/mealPrepMarketAdmin)
 
 Technology Used:
 
